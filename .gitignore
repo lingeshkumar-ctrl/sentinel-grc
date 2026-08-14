@@ -1,0 +1,105 @@
+# ================================================================
+# Sentinel-GRC Git Protection & Security Exclusion Rules
+# ================================================================
+
+# --- Environment & Secret Configuration ---
+.env
+.env.*
+!.env.example
+*.env
+*.env.local
+*.env.production
+
+# --- Private Keys, Certificates & Credentials ---
+*.pem
+*.key
+*.pkcs12
+*.pfx
+*.p12
+*.cer
+*.crt
+*.id_rsa
+*.id_ed25519
+id_rsa
+id_rsa.pub
+id_ed25519
+id_ed25519.pub
+*.jks
+*.keystore
+*credential*.json
+*secret*.json
+aws_credentials
+gcp_credentials.json
+
+# --- Local Databases & Persistent User Runtime Data ---
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+*.sqlite
+*.sqlite3
+iam-data/
+data/
+volumes/
+sqlite_data/
+
+# --- Scratch Scripts, Logs & Debug Dumps ---
+scratch/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.out
+*.tmp
+*.bak
+
+# --- Node & Next.js Build Output ---
+node_modules/
+.next/
+out/
+build/
+dist/
+.npm/
+
+# --- Go Binaries & Compilations ---
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+api-gateway/api-gateway
+iam-service/iam-service
+
+# --- Python Virtual Envs & Cache ---
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+env/
+venv/
+.venv/
+ENV/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# --- Operating System & IDE Dumps ---
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+*.swn
