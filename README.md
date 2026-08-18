@@ -98,7 +98,7 @@ graph TD
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/<your-username>/sentinel-grc.git
+git clone https://github.com/lingeshkumar-ctrl/sentinel-grc.git
 cd sentinel-grc
 ```
 
