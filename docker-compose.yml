@@ -1,0 +1,99 @@
+services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "${FRONTEND_PORT:-80}:3000"
+    environment:
+      - API_GATEWAY_URL=http://api-gateway:8080
+      - IAM_SERVICE_URL=http://iam-service:8081
+    depends_on:
+      - api-gateway
+
+  api-gateway:
+    build:
+      context: ./api-gateway
+      dockerfile: Dockerfile
+    ports:
+      - "${API_GATEWAY_PORT:-8080}:8080"
+    environment:
+      - IAM_SERVICE_URL=http://iam-service:8081
+      - RISK_SERVICE_URL=http://risk-service:8000
+      - COMPLIANCE_SERVICE_URL=http://compliance-service:8000
+      - SCANNER_SERVICE_URL=http://scanner-service:8000
+      - POLICY_SERVICE_URL=http://policy-engine:8000
+      - TELEMETRY_SERVICE_URL=http://telemetry-service:8000
+      - CRYPTO_SERVICE_URL=http://crypto-audit:8000
+      - SOAR_SERVICE_URL=http://soar-service:8000
+      - JWT_SECRET=${JWT_SECRET}
+    depends_on:
+      - iam-service
+      - scanner-service
+      - policy-engine
+      - telemetry-service
+      - crypto-audit
+      - soar-service
+
+  iam-service:
+    build:
+      context: ./iam-service
+      dockerfile: Dockerfile
+    ports:
+      - "${IAM_SERVICE_PORT:-8081}:8081"
+    volumes:
+      - ./iam-data:/app/data
+    environment:
+      - JWT_SECRET=${JWT_SECRET}
+      - INITIAL_ADMIN_USERNAME=${INITIAL_ADMIN_USERNAME:-admin}
+      - INITIAL_ADMIN_PASSWORD=${INITIAL_ADMIN_PASSWORD:-admin123}
+
+  risk-service:
+    build:
+      context: ./risk-service
+      dockerfile: Dockerfile
+    expose:
+      - "8000"
+
+  compliance-service:
+    build:
+      context: ./compliance-service
+      dockerfile: Dockerfile
+    expose:
+      - "8000"
+
+  scanner-service:
+    build:
+      context: ./backend/scanner-service
+      dockerfile: Dockerfile
+    expose:
+      - "8000"
+
+  policy-engine:
+    build:
+      context: ./backend/policy-engine
+      dockerfile: Dockerfile
+    expose:
+      - "8000"
+
+  telemetry-service:
+    build:
+      context: ./backend/telemetry-service
+      dockerfile: Dockerfile
+    expose:
+      - "8000"
+
+  crypto-audit:
+    build:
+      context: ./backend/crypto-audit
+      dockerfile: Dockerfile
+    expose:
+      - "8000"
+
+  soar-service:
+    build:
+      context: ./backend/soar-service
+      dockerfile: Dockerfile
+    expose:
+      - "8000"
+
